@@ -1,0 +1,90 @@
+From 0bbcb1f0f5dc398c52f3adc4d671cb7b3b61bf2a Mon Sep 17 00:00:00 2001
+From: Chukun Pan <amadeus@jmu.edu.cn>
+Date: Wed, 18 Aug 2023 23:06:01 +0800
+Subject: [PATCH] qca8081: add LED rule for Arcadyan AW1000
+
+Some routers, like Arcadyan AW1000, the LED of qca8081 is
+connected to the LED2 register and active low.
+
+Add a check for system compatible as we can parse it
+from device tree to make it work.
+
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ include/hsl/phy/qca808x_phy.h |  6 +++---
+ src/hsl/phy/qca808x_phy.c     | 30 +++++++++++++++++++++++++++---
+ 2 files changed, 30 insertions(+), 6 deletions(-)
+
+--- a/include/hsl/phy/qca808x_phy.h
++++ b/include/hsl/phy/qca808x_phy.h
+@@ -428,9 +428,9 @@ extern "C"
+ #define QCA808X_PHY_MMD7_LED1_CTRL              0x8074
+ #define QCA808X_PHY_MMD7_LED2_CTRL              0x8076
+ #define QCA808X_PHY_MMD7_LED_POLARITY_ACTIVE_HIGH 0x46
+-#define QCA808X_PHY_MMD7_LED0_CTRL_ENABLE       0x8670
+-#define QCA808X_PHY_MMD7_LED1_CTRL_DISABLE      0x0
+-#define QCA808X_PHY_MMD7_LED2_CTRL_DISABLE      0x0
++#define QCA808X_PHY_MMD7_LED_POLARITY_ACTIVE_LOW  0x6
++#define QCA808X_PHY_MMD7_LED_CTRL_ENABLE        0x8670
++#define QCA808X_PHY_MMD7_LED_CTRL_DISABLE       0x0
+ 
+ #define QCA808X_PHY_FRAME_CHECK_EN              0x0001
+ #define QCA808X_PHY_XMIT_MAC_CNT_SELFCLR        0x0002
+--- a/src/hsl/phy/qca808x_phy.c
++++ b/src/hsl/phy/qca808x_phy.c
+@@ -15,6 +15,9 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ /*qca808x_start*/
++
++#include <linux/of.h>
++
+ #include "sw.h"
+ #include "fal_port_ctrl.h"
+ #include "hsl_api.h"
+@@ -2383,21 +2386,42 @@ qca808x_phy_led_init(a_uint32_t dev_id,
+ {
+ 	sw_error_t rv = SW_OK;
+ 
++	if (of_machine_is_compatible("arcadyan,aw1000")) {
++		rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
++				QCA808X_PHY_MMD7_LED_POLARITY_CTRL,
++					QCA808X_PHY_MMD7_LED_POLARITY_ACTIVE_LOW);
++		SW_RTN_ON_ERROR(rv);
++		rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
++				QCA808X_PHY_MMD7_LED0_CTRL,
++					QCA808X_PHY_MMD7_LED_CTRL_DISABLE);
++		SW_RTN_ON_ERROR(rv);
++		rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
++				QCA808X_PHY_MMD7_LED1_CTRL,
++					QCA808X_PHY_MMD7_LED_CTRL_DISABLE);
++		SW_RTN_ON_ERROR(rv);
++		rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
++				QCA808X_PHY_MMD7_LED2_CTRL,
++					QCA808X_PHY_MMD7_LED_CTRL_ENABLE);
++		SW_RTN_ON_ERROR(rv);
++
++		return rv;
++	}
++
+ 	rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
+ 			QCA808X_PHY_MMD7_LED_POLARITY_CTRL,
+ 				QCA808X_PHY_MMD7_LED_POLARITY_ACTIVE_HIGH);
+ 	SW_RTN_ON_ERROR(rv);
+ 	rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
+ 			QCA808X_PHY_MMD7_LED0_CTRL,
+-				QCA808X_PHY_MMD7_LED0_CTRL_ENABLE);
++				QCA808X_PHY_MMD7_LED_CTRL_ENABLE);
+ 	SW_RTN_ON_ERROR(rv);
+ 	rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
+ 			QCA808X_PHY_MMD7_LED1_CTRL,
+-				QCA808X_PHY_MMD7_LED1_CTRL_DISABLE);
++				QCA808X_PHY_MMD7_LED_CTRL_DISABLE);
+ 	SW_RTN_ON_ERROR(rv);
+ 	rv = qca808x_phy_mmd_write(dev_id, phy_id, QCA808X_PHY_MMD7_NUM,
+ 			QCA808X_PHY_MMD7_LED2_CTRL,
+-				QCA808X_PHY_MMD7_LED2_CTRL_DISABLE);
++				QCA808X_PHY_MMD7_LED_CTRL_DISABLE);
+ 	SW_RTN_ON_ERROR(rv);
+ 
+ 	return rv;
