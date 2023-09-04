@@ -31,7 +31,7 @@ set dhcp.lan=dhcp
 set dhcp.lan.interface='lan'
 set dhcp.lan.start='2'
 set dhcp.lan.limit='252'
-set dhcp.lan.leasetime='124h'
+set dhcp.lan.leasetime='24h'
 set dhcp.lan.domain='lan'
 EOF
 }
