@@ -48,16 +48,16 @@ endef
 TARGET_DEVICES += buffalo_wxr-5950ax12
 
 define Device/compex_wpq873
-       $(call Device/FitImage)
-       $(call Device/UbiFit)
-       DEVICE_VENDOR := Compex
-       DEVICE_MODEL := WPQ873
-       BLOCKSIZE := 128k
-       PAGESIZE := 2048
-       DEVICE_DTS_CONFIG := config@hk09.wpq873
-       SOC := ipq8072
-       DEVICE_PACKAGES := ipq-wifi-compex_wpq873
-       IMAGE/factory.ubi := append-ubi | qsdk-ipq-factory-nand
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := Compex
+	DEVICE_MODEL := WPQ873
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@hk09.wpq873
+	SOC := ipq8072
+	DEVICE_PACKAGES := ipq-wifi-compex_wpq873
+	IMAGE/factory.ubi := append-ubi | qsdk-ipq-factory-nand
 endef
 TARGET_DEVICES += compex_wpq873
 
