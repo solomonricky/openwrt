@@ -1,13 +1,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=netifd
-PKG_RELEASE:=2
+PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/netifd.git
-PKG_SOURCE_DATE:=2023-10-20
-PKG_SOURCE_VERSION:=5590a80e2566d378be955f61c287a63fb3bdf329
-PKG_MIRROR_HASH:=eef792b4e9fa7a5227cf8c2ec4ed5e6558dd04c119cd9f97561923821fd1aa92
+PKG_SOURCE_DATE:=2023-11-20
+PKG_SOURCE_VERSION:=f3e06e81b347bbdec1c6c71603328b6e442728d4
+PKG_MIRROR_HASH:=f16dd61aede5597fd7b5ee8e7752a916494281bc981b35c16e788ddb7409584a
 PKG_MAINTAINER:=Felix Fietkau <nbd@nbd.name>
 
 PKG_LICENSE:=GPL-2.0
@@ -21,7 +21,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/netifd
   SECTION:=base
   CATEGORY:=Base system
-  DEPENDS:=+libuci +libnl-tiny +libubus +ubus +ubusd +jshn +libubox
+  DEPENDS:=+libuci +libnl-tiny +libubus +ubus +ubusd +jshn +libubox +libudebug
   TITLE:=OpenWrt Network Interface Configuration Daemon
 endef
 
