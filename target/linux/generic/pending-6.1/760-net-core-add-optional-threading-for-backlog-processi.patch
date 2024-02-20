@@ -12,7 +12,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -520,6 +520,7 @@ static inline bool napi_complete(struct
+@@ -543,6 +543,7 @@ static inline bool napi_complete(struct
  }
  
  int dev_set_threaded(struct net_device *dev, bool threaded);
@@ -20,7 +20,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  
  /**
   *	napi_disable - prevent NAPI from scheduling
-@@ -3129,6 +3130,7 @@ struct softnet_data {
+@@ -3152,6 +3153,7 @@ struct softnet_data {
  	unsigned int		processed;
  	unsigned int		time_squeeze;
  	unsigned int		received_rps;
@@ -167,7 +167,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  #ifdef CONFIG_RPS
  	remsd = oldsd->rps_ipi_list;
  	oldsd->rps_ipi_list = NULL;
-@@ -11471,6 +11545,7 @@ static int __init net_dev_init(void)
+@@ -11480,6 +11554,7 @@ static int __init net_dev_init(void)
  		INIT_CSD(&sd->defer_csd, trigger_rx_softirq, sd);
  		spin_lock_init(&sd->defer_lock);
  

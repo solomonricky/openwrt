@@ -5,9 +5,9 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_VERSION:=2023.07.02
+PKG_VERSION:=2024.01
 PKG_RELEASE:=1
-PKG_HASH:=6b6a48581c14abb0f95bd87c1af4d740922406d7b801002a9f94727fdde021d5
+PKG_HASH:=b99611f1ed237bf3541bdc8434b68c96a6e05967061f992443cb30aabebef5b3
 
 PKG_MAINTAINER:=Tobias Maedel <openwrt@tbspace.de>
 
@@ -37,6 +37,13 @@ define U-Boot/nanopi-r2c-rk3328
   NAME:=NanoPi R2C
   BUILD_DEVICES:= \
     friendlyarm_nanopi-r2c
+endef
+
+define U-Boot/nanopi-r2c-plus-rk3328
+  $(U-Boot/rk3328/Default)
+  NAME:=NanoPi R2C Plus
+  BUILD_DEVICES:= \
+    friendlyarm_nanopi-r2c-plus
 endef
 
 define U-Boot/nanopi-r2s-rk3328
@@ -100,7 +107,8 @@ define U-Boot/nanopi-r4s-rk3399
   $(U-Boot/rk3399/Default)
   NAME:=NanoPi R4S
   BUILD_DEVICES:= \
-    friendlyarm_nanopi-r4s
+    friendlyarm_nanopi-r4s \
+    friendlyarm_nanopi-r4s-enterprise
 endef
 
 define U-Boot/rock-pi-4-rk3399
@@ -147,6 +155,7 @@ UBOOT_TARGETS := \
   rock-pi-4-rk3399 \
   rockpro64-rk3399 \
   nanopi-r2c-rk3328 \
+  nanopi-r2c-plus-rk3328 \
   nanopi-r2s-rk3328 \
   orangepi-r1-plus-rk3328 \
   orangepi-r1-plus-lts-rk3328 \
