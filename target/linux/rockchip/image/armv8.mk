@@ -61,7 +61,7 @@ define Device/friendlyarm_nanopi-r4s-enterprise
   DEVICE_VARIANT := 4GB LPDDR4
   SOC := rk3399
   UBOOT_DEVICE_NAME := nanopi-r4s-rk3399
-  DEVICE_PACKAGES := kmod-r8168
+  DEVICE_PACKAGES := kmod-r8169
 endef
 TARGET_DEVICES += friendlyarm_nanopi-r4s-enterprise
 
@@ -94,6 +94,15 @@ define Device/pine64_rockpro64
   SOC := rk3399
 endef
 TARGET_DEVICES += pine64_rockpro64
+
+define Device/radxa_cm3-io
+  DEVICE_VENDOR := Radxa
+  DEVICE_MODEL := CM3 IO
+  SOC := rk3566
+  DEVICE_DTS := rockchip/rk3566-radxa-cm3-io
+  UBOOT_DEVICE_NAME := radxa-cm3-io-rk3566
+endef
+TARGET_DEVICES += radxa_cm3-io
 
 define Device/radxa_rock-pi-4a
   DEVICE_VENDOR := Radxa
