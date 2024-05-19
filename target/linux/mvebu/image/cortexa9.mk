@@ -3,6 +3,8 @@
 # Copyright (C) 2012-2016 OpenWrt.org
 # Copyright (C) 2016 LEDE-project.org
 
+DTS_DIR := $(DTS_DIR)/marvell
+
 define Build/fortigate-header
   ( \
     dd if=/dev/zero bs=384 count=1 2>/dev/null; \

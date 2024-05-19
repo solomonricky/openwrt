@@ -83,6 +83,12 @@ platform_do_upgrade() {
 	bananapi,bpi-r3|\
 	bananapi,bpi-r3-mini|\
 	bananapi,bpi-r4|\
+	bananapi,bpi-r4-poe|\
+	mediatek,mt7988a-rfb|\
+	jdcloud,re-cp-03|\
+	tplink,tl-xdr4288|\
+	tplink,tl-xdr6086|\
+	tplink,tl-xdr6088|\
 	xiaomi,redmi-router-ax6000-ubootmod)
 		[ -e /dev/fit0 ] && fitblk /dev/fit0
 		[ -e /dev/fitrw ] && fitblk /dev/fitrw
@@ -132,17 +138,10 @@ platform_do_upgrade() {
 	mediatek,mt7981-rfb|\
 	netcore,n60|\
 	qihoo,360t7|\
-	tplink,tl-xdr4288|\
-	tplink,tl-xdr6086|\
-	tplink,tl-xdr6088|\
 	xiaomi,mi-router-ax3000t-ubootmod|\
 	xiaomi,mi-router-wr30u-ubootmod)
 		CI_KERNPART="fit"
 		nand_do_upgrade "$1"
-		;;
-	jdcloud,re-cp-03)
-		CI_KERNPART="production"
-		emmc_do_upgrade "$1"
 		;;
 	mercusys,mr90x-v1)
 		CI_UBIPART="ubi0"
@@ -199,6 +198,7 @@ platform_check_image() {
 	case "$board" in
 	bananapi,bpi-r3|\
 	bananapi,bpi-r4|\
+	bananapi,bpi-r4-poe|\
 	cmcc,rax3000m)
 		[ "$magic" != "d00dfeed" ] && {
 			echo "Invalid image type."
@@ -226,7 +226,8 @@ platform_copy_config() {
 		;;
 	bananapi,bpi-r3|\
 	bananapi,bpi-r3-mini|\
-	bananapi,bpi-r4)
+	bananapi,bpi-r4|\
+	bananapi,bpi-r4-poe)
 		case "$(fitblk_get_bootdev)" in
 		mmcblk*)
 			emmc_copy_config
