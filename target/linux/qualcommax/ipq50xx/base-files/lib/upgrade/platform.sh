@@ -72,6 +72,9 @@ platform_check_image() {
 
 platform_do_upgrade() {
 	case "$(board_name)" in
+	xunison,d50-5g)
+		nand_do_upgrade "$1"
+		;;
 	linksys,mx2000|\
 	linksys,mx5500|\
 	linksys,spnmx56)
