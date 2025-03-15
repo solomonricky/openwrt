@@ -108,3 +108,18 @@ define Device/linksys_spnmx56
 		ipq-wifi-linksys_spnmx56
 endef
 TARGET_DEVICES += linksys_spnmx56
+
+define Device/xunison_d50-5g
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	SOC := ipq5018
+	DEVICE_VENDOR := Xunison
+	DEVICE_MODEL := D50-5G
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@mp03.1
+	DEVICE_PACKAGES := kmod-ath11k-pci \
+		ath11k-firmware-qcn9074 \
+		ipq-wifi-xunison_d50-5g
+endef
+TARGET_DEVICES += xunison_d50-5g
