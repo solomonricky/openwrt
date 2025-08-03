@@ -380,6 +380,23 @@ define Device/redmi_ax6
 endef
 TARGET_DEVICES += redmi_ax6
 
+define Device/sagemcom_5866t
+	$(call Device/FitImage)
+	$(call Device/EmmcImage)
+	DEVICE_VENDOR := Sagemcom
+	DEVICE_MODEL := 5866T
+	DEVICE_DTS_CONFIG := config@hk01.c6
+	SOC := ipq8072
+	SOC := ipq8072
+	KERNEL_SIZE := 12288k
+	IMAGES := sysupgrade.bin factory.bin kernel.bin
+	IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-rootfs | append-metadata
+	IMAGE/kernel.bin := append-kernel
+	DEVICE_PACKAGES := kmod-fs-f2fs f2fs-tools
+endef
+TARGET_DEVICES += sagemcom_5866t
+
 define Device/spectrum_sax1v1k
 	$(call Device/FitImage)
 	$(call Device/EmmcImage)

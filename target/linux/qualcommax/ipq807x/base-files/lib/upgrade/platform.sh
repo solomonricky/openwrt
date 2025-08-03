@@ -256,7 +256,8 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART="rootfs"
 		nand_do_upgrade "$1"
 		;;
-	spectrum,sax1v1k)
+	spectrum,sax1v1k|\
+	sagemcom,5866t)
 		CI_KERNPART="0:HLOS"
 		CI_ROOTPART="rootfs"
 		CI_DATAPART="rootfs_data"
@@ -320,6 +321,7 @@ platform_copy_config() {
 	prpl,haze|\
 	qnap,301w|\
 	spectrum,sax1v1k|\
+	sagemcom,5866t|\
 	zyxel,nbg7815)
 		emmc_copy_config
 		;;
